@@ -1,0 +1,16 @@
+#list .row .card {
+  width: 13rem;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#list .row .card:hover {
+  transform: scale(1.1); /* Mengubah ukuran elemen saat hover */
+  box-shadow: 5px 5px 10px #dc060d5d;
+}
+.red-icon{
+    color: #ffffff;
+}
+.card{
+  background-color: rgba(0, 0, 0, 0.265);
+}
