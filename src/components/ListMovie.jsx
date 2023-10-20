@@ -1,9 +1,22 @@
 import { AiFillLike, AiOutlineArrowRight } from "react-icons/ai";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../assets/styles/ListMovie.css";
+import { useEffect } from "react";
+import getMovies from "../api/getMovies";
+import { useState } from "react";
 
 function ListMovie() {
-  const movieData = useLoaderData();
+  const [movieData, setMovieData] = useState([]);
+
+  useEffect(() => {
+    const getMovieList = async () => {
+      const movieList = await getMovies();
+      setMovieData(movieList);
+      console.log(`Movie List: ${movieList}`)
+    };
+
+    getMovieList();
+  }, []);
 
   return (
     <div id="list" className="container mt-5">

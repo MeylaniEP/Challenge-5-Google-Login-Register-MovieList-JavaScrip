@@ -8,24 +8,58 @@ import getMovies from "./api/getMovies.js";
 import Details from "./pages/Details.jsx";
 import {
   Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
+  BrowserRouter as Router,
+  Routes,
 } from "react-router-dom";
 import "./index.css";
 import getDetailsMovie from "./api/getDetailsMovie.js";
+import Login from "./pages/Login.jsx";
+import Registrasi from "./pages/Registrasi.jsx";
+import Welcome from "./pages/Wellcome.jsx";
+import Authentication from "./layouts/Authentication.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
+import { useLoaderData } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route element={<App />} path="/" >
-      <Route index element={<Home />} loader={getMovies} />
-      <Route element={<Details />} path="/details/:id" loader={getDetailsMovie} />
-    </Route>
-  )
-);
+const GoogleAuthComponent = () => {
+  return (
+    <GoogleOAuthProvider
+      clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}
+    >
+      <AppWithRoutes />
+    </GoogleOAuthProvider>
+  );
+};
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const AppWithRoutes = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route element={<App />} path="/">
+          <Route index element={<Home />} loader={getMovies} />
+          <Route
+            element={<Details />}
+            path="/details/:id"
+            loader={getDetailsMovie}
+          />
+          <Route element={<UserProfile />} path="/account" />
+        </Route>
+
+        <Route path="/wellcome" element={<Welcome />} />
+
+        <Route element={<Authentication />}>
+          <Route element={<Registrasi />} path="/register" />
+          <Route element={<Login />} path="/login" />
+        </Route>
+      </Routes>
+    </Router>
+  );
+};
+
+const rootElement = document.getElementById("root");
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <GoogleAuthComponent />
   </React.StrictMode>
 );

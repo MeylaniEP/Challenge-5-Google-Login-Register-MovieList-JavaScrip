@@ -1,12 +1,22 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
+import { Outlet, useNavigate } from "react-router-dom";
 
 function App() {
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/wellcome")
+    }
+  }, [])
+
   return (
     <>
       <Navbar />
       <Outlet />
+      <Footer />
     </>
     )
 }

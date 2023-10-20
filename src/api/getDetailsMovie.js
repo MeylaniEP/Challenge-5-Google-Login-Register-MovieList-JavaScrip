@@ -1,20 +1,19 @@
-export default async function getDetailsMovie({params}) {
+export default async function getDetailsMovie(id) {
+  const token = localStorage.getItem("token");
   const option = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDJjOWMxZTc4YzljNTZhNjA4YTAxMmFhODI4MWZmMiIsInN1YiI6IjY1MTQyNDBiYmRkNTY4MDBjN2NlZmYwMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XTsX5M91f3mZe_rDHE85Ec0emA6UElphl5YePmcpcuU",
+      Authorization: `Bearer ${token}`,
     },
   };
   try {
     const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${params.id}`,
+      `https://shy-cloud-3319.fly.dev/api/v1/movie/${id}`,
       option
     );
-    const data = await response.json();
-    console.log(data)
-    return data;
+    const responseJson = await response.json();
+    return responseJson.data;
   } catch (error) {
     console.error(error);
   }
